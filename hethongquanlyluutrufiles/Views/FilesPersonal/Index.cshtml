@@ -1,0 +1,132 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<hethongquanlyluutrufiles.Models.File>
+
+@{
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Danh sách file cá nhân" + CurrentPage;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h2 class="header-title">Danh sách file cá nhân</h2>
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="" asp-controller="Home" asp-action="TrangChuUser" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+        </nav>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="col m-b-30">
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-affix m-v-10">
+                            <i class="prefix-icon anticon anticon-search opacity-04"></i>
+                            <input id="keyword" name="keyword" type="text" class="form-control" placeholder="Tìm kiếm file">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-affix m-v-10">
+                            <select class="custom-select" id="txtTypeFileID" name="txtTypeFileID" style="min-width: 200px;" asp-items="ViewBag.typefile">
+                                <option selected>Chọn danh mục</option>
+                                <option value="0">Chọn tất cả</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 text-right" style="float:right">
+                <a class="btn btn-primary" asp-area="" asp-controller="FilesPersonal" asp-action="Create"><i class="anticon anticon-plus-circle m-r-5"></i><span>Thêm mới</span></a>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Tên file</th>
+                        <th scope="col">Loại file</th>
+                        <th scope="col">Thời gian tạo</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="records_table">
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <th scope="row">@item.FileId</th>
+                                <td>@item.FileName</td>
+                                <td>@item.TypeFile.TypeFileName</td>
+                                <td>@item.DateUploaded</td>
+                                <td>
+                                    <a class="btn btn-primary btn-tone m-r-5" asp-area="" asp-controller="FilesPersonal" asp-action="Edit" asp-route-id="@item.FileId">Edit</a>
+                                    <a class="btn btn-secondary btn-tone m-r-5" asp-area="" asp-controller="FilesPersonal" asp-action="Details" asp-route-id="@item.FileId">Details</a>
+                                    <a class="btn btn-success btn-tone m-r-5" asp-area="" asp-controller="FilesPersonal" asp-action="Delete" asp-route-id="@item.FileId">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+            <div aria-label="Page navigation example" style="float: right">
+                <ul class="pagination">
+                    <pager class="pager-container" list="@Model" asp-area="" asp-controller="FilesPersonal" asp-route-typeFileID="@ViewBag.CurrentTypeFileID" asp-action="Index" />
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+            $(document).ready(function () {
+            jQuery("#txtTypeFileID").change(function () {
+                    var typefileID = jQuery(this).children(":selected").attr("value");
+                typefileID = parseFloat(typefileID);
+                $('#txtTypeFileID option')
+                        .removeAttr('selected');
+                $("#txtTypeFileID > [value=" + typefileID + "]").attr("selected", "true");
+                    $.ajax({
+                    url: '/FilesPersonal/Filtter',
+                        datatype: "json",
+                        type: "GET",
+                        data: {
+                        typeFileID: typefileID
+                        },
+                        async: true,
+                        success: function (results) {
+                            if (results.status == "success") {
+                                window.location.href = results.redirectUrl;
+                            }
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                });
+
+            $("#keyword").keyup(function () {
+                var strkeyword = $('#keyword').val();
+                $.ajax({
+                    url: '/Search/FindFilesPersonal',
+                    datatype: "json",
+                    type: "POST",
+                    data: { keyword: strkeyword },
+                    async: true,
+                    success: function (results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+        });
+
+    </script>
+}

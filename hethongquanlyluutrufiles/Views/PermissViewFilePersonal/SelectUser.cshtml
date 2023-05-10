@@ -1,0 +1,94 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<hethongquanlyluutrufiles.Models.User>
+
+@{
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Chọn người dùng" + CurrentPage;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-header">
+    <h2 class="header-title">Chọn người dùng</h2>
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="" asp-controller="Home" asp-action="TrangChuUser" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <div class="col m-b-30">
+            <div class="col-lg-8">
+                <div class="col-md-6">
+                    <div class="input-affix m-v-10">
+                        <i class="prefix-icon anticon anticon-search opacity-04"></i>
+                        <input id="keyword" name="keyword" type="text" class="form-control" placeholder="Tìm kiếm người dùng">
+                    </div>
+                </div>
+            </div>
+            <div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr role="row">
+                            <th >ID</th>
+                            <th >Tên người dùng</th>
+                            <th >Giới tính</th>
+                            <th >Vai trò</th>
+                            <th >Bộ phận</th>
+                            <th >
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="records_table">
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr role="row" class="odd">
+                                    <td>
+                                        @item.UserId
+                                    </td>
+                                    <td>
+                                        @item.Username
+                                    </td>
+                                    <td>@item.Sex</td>
+                                    <td>@item.Role.TypeRole</td>
+                                    <td>@item.Department.DepartmentName </td>
+                                    <td class="text-right">
+                                        <a class="btn btn-primary btn-tone m-r-5" asp-area="" asp-controller="PermissViewFilePersonal" asp-action="SelectFile" asp-route-userid="@item.UserId">Chọn</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div aria-label="Page navigation example" style="float: right">
+            <ul class="pagination">
+                <pager class="pager-container" list="@Model" asp-area="" asp-controller="PermissViewFilePersonal" asp-action="SelectUser" />
+            </ul>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $("#keyword").keyup(function () {
+            var strkeyword = $('#keyword').val();
+            $.ajax({
+                url: '/Search/FindUsersSharedOne',
+                datatype: "json",
+                type: "POST",
+                data: { keyword: strkeyword },
+                async: true,
+                success: function (results) {
+                    $("#records_table").html("");
+                    $("#records_table").html(results);
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        });
+    </script>
+}

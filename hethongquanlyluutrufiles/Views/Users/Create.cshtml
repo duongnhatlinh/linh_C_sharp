@@ -1,0 +1,86 @@
+﻿@model hethongquanlyluutrufiles.ModelViews.UserModel
+
+@{
+    ViewData["Title"] = "Tạo thông tin người dùng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h3>Nhập thông tin của bạn</h3>
+<hr class="m-v-5">
+<form asp-area="" asp-controller="Users" asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="card">
+    <div class="card-body">
+        <h4>Thông tin cá nhân</h4>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label class="control-label">Ngày sinh:</label>
+                    <input asp-for="Birthday" class="form-control" />
+                <span asp-validation-for="Birthday" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="control-label">Số CMND:</label>
+                <input asp-for="Cmnd" class="form-control" />
+                <span asp-validation-for="Cmnd" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-2">
+                <label class="font-weight-semibold">Giới tính:</label>
+                <select asp-for="Sex" class="form-control">
+                    <option selected>Chọn giới tính</option>
+                    <option>Nam</option>
+                    <option>Nữ</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-10">
+                <label class="control-label">Địa chỉ:</label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="card">
+    <div class="card-body">
+        <h4>Thông tin công việc</h4>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label class="control-label">Chức danh:</label>
+                <select asp-for="RoleId" class="form-control" asp-items="ViewBag.typerole">
+                    <option selected>Chọn chức danh</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="control-label">Bộ phận</label>
+                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.department">
+                    <option selected>Chọn bộ phận</option>
+                </select>
+            </div>
+        </div>
+       <div class="form-row">
+            <div class="form-group col-md-2">
+                <label class="font-weight-semibold" for="Typework">Loại công việc:</label>
+                <select asp-for="Typework" class="form-control">
+                    <option selected>Chọn công việc</option>
+                    <option>Full-time</option>
+                    <option>Part-time</option>
+                </select>
+            </div>
+            <div class="form-group col-md-5">
+                <label class="control-label">Công ty:</label>
+                <input asp-for="Company" class="form-control" />
+                <span asp-validation-for="Company" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-5">
+                <label class="control-label">Nơi làm việc:</label>
+                <input asp-for="Workplace" class="form-control" />
+                <span asp-validation-for="Workplace" class="text-danger"></span>
+            </div>
+        </div>
+        </div>
+        <div class="form-group" style="padding-left: 30px">
+            <input type="submit" value="Tạo" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
+

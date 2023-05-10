@@ -1,0 +1,27 @@
+﻿@model List<User>
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <tr>
+            <th scope="row">@item.UserId</th>
+            <td>@item.Username</td>
+            <td>@item.Department.DepartmentName</td>
+            <td>
+                <div class="form-row d-flex justify-content-between p-t-5">
+                    <div class="form-group d-flex align-items-center">
+                        <div class="switch m-r-10">
+                            <input type="checkbox" id="switch-1" checked="">
+                            <label for="switch-1"></label>
+                        </div>
+                        <label>Able Shared</label>
+                    </div>
+                    <div>
+                        <a class="btn btn-primary btn-tone m-r-5" asp-area="Admin" asp-controller="AdminUsers" asp-action="Details" asp-route-id="@item.UserId">Chi tiết</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+}

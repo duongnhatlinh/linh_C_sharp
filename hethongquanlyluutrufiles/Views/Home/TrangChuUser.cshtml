@@ -1,0 +1,41 @@
+﻿@model int
+@{
+    ViewData["Title"] = "TrangChuUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Trang chủ user</title>
+
+</head>
+<body>
+    <style>
+        .btn .badge {
+            font-size: 0.75rem;
+            height: 1.5rem;
+            line-height: 1.5rem;
+            padding: 0 0.5rem;
+        }
+        .text-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+    <div>
+        <div class="container-fluid">
+                 <div class="text-center">
+                <a asp-area="" asp-controller="FilesReceived" asp-action="Index" id="center" class="btn btn-primary">
+                    Thông báo <i class="anticon anticon-bell"></i>                
+                    <span class="badge badge-danger rounded-circle position-absolute top-0 end-0">@Model</span>
+                </a>
+                 </div>
+             </div>
+        </div>
+</body>
+</html>

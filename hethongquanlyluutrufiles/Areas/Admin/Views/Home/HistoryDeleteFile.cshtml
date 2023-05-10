@@ -1,0 +1,65 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<hethongquanlyluutrufiles.Models.File>
+
+@{
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Lịch sử xóa file" + CurrentPage;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h2 class="header-title">Lịch sử xóa file</h2>
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="TrangChuAdmin" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+        </nav>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="col m-b-30">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr role="row">
+                            <th>ID</th>
+                            <th>Tên file</th>
+                            <th>Loại file</th>
+                            <th>Thời gian tạo</th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="records_table">
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr role="row" class="odd">
+                                    <td> @item.FileId</td>
+                                    <td>@item.FileName</td>
+                                    <td>@item.TypeFile.TypeFileName</td>
+                                    <td>@item.DateUploaded </td>
+                                    <td class="text-right">
+                                        <form asp-action="HistoryDeleteFile">
+                                            <input type="hidden" name="fileid" value="@item.FileId" />
+                                            <input type="submit" class="btn btn-primary btn-tone m-r-5" value="Khôi phục" />
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div aria-label="Page navigation example" style="float: right">
+            <ul class="pagination">
+                <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="Home" asp-action="HistoryDeleteFile" />
+            </ul>
+        </div>
+    </div>
+</div>

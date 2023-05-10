@@ -1,0 +1,21 @@
+﻿@model List<User>
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <tr role="row" class="odd">
+            <td>
+                @item.UserId
+            </td>
+            <td>
+                @item.Username
+            </td>
+            <td>@item.Sex</td>
+            <td>@item.Role.TypeRole</td>
+            <td>@item.Department.DepartmentName </td>
+            <td class="text-right">
+                <a class="btn btn-primary btn-tone m-r-5" asp-area="Admin" asp-controller="AdminPermissViewFilePersonal" asp-action="SelectFile" asp-route-userid="@item.UserId">Chọn</a>
+            </td>
+        </tr>
+    }
+}

@@ -1,0 +1,102 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<hethongquanlyluutrufiles.Models.File>
+
+@{
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Lựa chọn file" + CurrentPage;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="page-header">
+    <h2 class="header-title">Chọn file chia sẻ</h2>
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="" asp-controller="Home" asp-action="TrangChuUser" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+        </nav>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="col m-b-30">
+            <div class="row align-items-md-center">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-affix m-v-10">
+                                <i class="prefix-icon anticon anticon-search opacity-04"></i>
+                                <input id="keyword" name="keyword" type="text" class="form-control" placeholder="Tìm kiếm file">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-md-right m-v-10">
+                        <a class="btn btn-primary btn-tone m-r-5" asp-area="" asp-controller="PermissViewFileGroup" asp-action="SelectGroupUsers">Trở lại</a>
+                    </div>
+                </div>
+            </div>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr role="row">
+                        <th style="width: 108.75px;">ID</th>
+                        <th style="width: 320.219px;">Tên file</th>
+                        <th style="width: 150.203px;">Loại file</th>
+                        <th style="width: 150.281px;">Thời gian tạo</th>
+                        <th style="width: 100.516px;">
+                        </th>
+                    </tr>
+                </thead>
+                    <tbody id="records_table">
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr role="row" class="odd">
+                                <td> @item.FileId</td>
+                                <td>@item.FileName</td>
+                                <td>@item.TypeFile.TypeFileName</td>
+                                <td>@item.DateUploaded </td>
+                                <td class="text-right">
+                                    <a class="btn btn-primary btn-tone m-r-5" asp-area="" asp-controller="PermissViewFileGroup" asp-action="PermissGroupUsers" asp-route-fileid="@item.FileId">Chọn</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+        <div aria-label="Page navigation example" style="float: right">
+            <ul class="pagination">
+                <pager class="pager-container" list="@Model" asp-area="" asp-controller="PermissViewFileGroup" asp-action="SelectFile" />
+            </ul>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $("#keyword").keyup(function () {
+            var strkeyword = $('#keyword').val();
+            $.ajax({
+                url: '/Search/FindFilesSharedGroup',
+                datatype: "json",
+                type: "POST",
+                data: { keyword: strkeyword },
+                async: true,
+                success: function (results) {
+                    $("#records_table").html("");
+                    $("#records_table").html(results);
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        });
+    </script>
+}
+

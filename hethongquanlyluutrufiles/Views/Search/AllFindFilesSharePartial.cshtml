@@ -1,0 +1,17 @@
+﻿@model List<File>
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <tr role="row" class="odd">
+            <td> @item.FileId</td>
+            <td>@item.FileName</td>
+            <td>@item.TypeFile.TypeFileName</td>
+            <td>@item.DateUploaded </td>
+            <td class="text-right">
+                <a class="btn btn-primary btn-tone m-r-5" asp-area="" asp-controller="PermissViewFileAll" asp-action="PermissTotalUsers" asp-route-fileid="@item.FileId">Chọn</a>
+            </td>
+        </tr>
+    }
+}                }

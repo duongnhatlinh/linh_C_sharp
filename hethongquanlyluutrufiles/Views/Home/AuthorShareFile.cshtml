@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Không có quyền chia sẻ file";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        .full-height {
+            height: 100vh;
+        }
+
+        .flex-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <div class="container-fluid">
+            <div class="d-flex full-height flex-column justify-content-between">
+                <div class="container flex-center">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="p-v-30">
+                                <h2 class="font-weight-light font-size-60">Không có quyền chia sẻ file</h2>
+                                <p class="lead m-b-30">Trở lại trang chủ</p>
+                                <a asp-area="" asp-controller="Home" asp-action="TrangChuUser" class="btn btn-primary btn-tone">Go Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-none d-md-flex p-h-40"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+
+

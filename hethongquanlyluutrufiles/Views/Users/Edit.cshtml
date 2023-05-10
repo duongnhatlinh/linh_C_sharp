@@ -1,0 +1,115 @@
+﻿@model hethongquanlyluutrufiles.Models.User
+
+@{
+    ViewData["Title"] = "Thay đổi thông tin người dùng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h2 class="header-title">Thay đổi thông tin cá nhân</h2>
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="" asp-controller="Home" asp-action="TrangChuUser" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+        </nav>
+    </div>
+</div>
+
+<form asp-area="" asp-controller="Users" asp-action="Edit" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="UserId" />
+    <input type="hidden" asp-for="Email" />
+    <input type="hidden" asp-for="Password" />
+    <input type="hidden" asp-for="Salt" />
+    <input type="hidden" asp-for="IsAdminOrUser" />
+    <input type="hidden" asp-for="IsActive" />
+    <input type="hidden" asp-for="AbleShared" />
+    <div class="card">
+    <div class="card-body">
+        <hr class="m-v-5">
+        <h4>Thông tin cá nhân</h4>
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label class="control-label">Họ và tên:</label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="control-label">Ngày sinh:</label>
+                <input asp-for="Birthday" class="form-control" />
+                <span asp-validation-for="Birthday" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-2">
+                <label class="font-weight-semibold">Giới tính:</label>
+                <select asp-for="Sex" class="form-control">
+                    <option selected>Chọn giới tính</option>
+                    <option>Nam</option>
+                    <option>Nữ</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label class="control-label">Số điện thoại:</label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label class="control-label">Số CMND:</label>
+                <input asp-for="Cmnd" class="form-control" />
+                <span asp-validation-for="Cmnd" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Địa chỉ:</label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="card">
+    <div class="card-body">
+        <h4>Thông tin công việc</h4>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label class="control-label">Chức danh:</label>
+                <select asp-for="RoleId" class="form-control" asp-items="ViewBag.typerole">
+                    <option selected>Chọn chức danh</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="control-label">Bộ phận</label>
+                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.department">
+                    <option selected>Chọn bộ phận</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label class="font-weight-semibold" for="Loaihinhcongviec">Loại công việc:</label>
+                <select asp-for="Typework" class="form-control">
+                    <option selected>@Model.Typework</option>
+                    <option>Full-time</option>
+                    <option>Part-time</option>
+                </select>
+                    <span asp-validation-for="Typework" class="text-danger"></span>
+
+            </div>
+            <div class="form-group col-md-5">
+                <label class="control-label">Công ty:</label>
+                <input asp-for="Company" class="form-control" />
+                <span asp-validation-for="Company" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-5">
+                <label class="control-label">Nơi làm việc:</label>
+                <input asp-for="Workplace" class="form-control" />
+                <span asp-validation-for="Workplace" class="text-danger"></span>
+            </div>
+        </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Thay đổi" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
+

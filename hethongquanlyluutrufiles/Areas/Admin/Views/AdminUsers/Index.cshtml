@@ -1,0 +1,244 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<hethongquanlyluutrufiles.Models.User>
+
+@{
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Danh sách người dùng" + CurrentPage;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h2 class="header-title">Danh sách người dùng</h2>
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="TrangChuAdmin" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+        </nav>
+    </div>
+</div>
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+        .switch input {
+            display: none;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+</style>
+<div class="card">
+    <div class="card-body">
+        <div class="col m-b-30">
+            <div class="col-lg-8">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <div class="input-affix m-v-10">
+                            <i class="prefix-icon anticon anticon-search opacity-04"></i>
+                            <input id="keyword" name="keyword" type="text" class="form-control" placeholder="Tìm kiếm người dùng">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class="input-affix m-v-10">
+                            <select class="custom-select" id="txtDepID" name="txtDepID" style="min-width: 200px;" asp-items="ViewBag.Department">
+                                <option selected>Chọn danh mục</option>
+                                <option value="0">Chọn tất cả</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 text-right" style="float:right">
+                <a class="btn btn-primary" asp-area="Admin" asp-controller="AdminUsers" asp-action="Create"><i class="anticon anticon-plus-circle m-r-5"></i><span>Thêm mới</span></a>
+            </div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Tên người dùng</th>
+                        <th scope="col">Phòng ban</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="records_table">
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            
+                            <tr>
+                                <th scope="row">@item.UserId</th>
+                                <td>@item.Username</td>
+                                <td>@item.Department.DepartmentName</td>
+                                <td>
+                                    <div class="form-row align-items-center justify-content-between">
+                                        <div class="col-auto">
+                                            <label for="status-switch">Able Shared</label>
+                                        </div>
+                                        <div class="col-auto">
+                                            <label class="switch" id="my-list" data-id="@item.UserId">
+                                               <input type="checkbox" @(item.AbleShared == true ? "checked" : "") onclick="updateSwitch(@item.UserId, this.checked)">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                        <div class="col-auto">
+                                            <a class="btn btn-primary btn-tone" asp-area="Admin" asp-controller="AdminUsers" asp-action="Details" asp-route-id="@item.UserId">Chi tiết</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <div aria-label="Page navigation example" style="float: right">
+                <ul class="pagination">
+                    <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminUsers" asp-route-BophanId="@ViewBag.CurrentDepartment" asp-action="Index" />
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        // filter
+        $(document).ready(function () {
+            jQuery("#txtDepID").change(function () {
+                var depId = jQuery(this).children(":selected").attr("value");
+                depId = parseFloat(depId);
+                $('#txtDepID option')
+                    .removeAttr('selected');
+                $("#txtDepID > [value=" + depId + "]").attr("selected", "true");
+                $.ajax({
+                    url: '/Admin/AdminUsers/Filtter',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        DepID: depId
+                    },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+        });
+
+        // search
+        $("#keyword").keyup(function () {
+            var strkeyword = $('#keyword').val();
+            $.ajax({
+                url: '/Admin/Search/FindUsers',
+                datatype: "json",
+                type: "POST",
+                data: { keyword: strkeyword },
+                async: true,
+                success: function (results) {
+                    $("#records_table").html("");
+                    $("#records_table").html(results);
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        });
+        // switch
+        function updateSwitch(id, value) {
+            $.ajax({
+                url: '@Url.Action("UpdateSwitch", "AdminUsers")',
+                type: 'POST',
+                data: { id: id, value: value },
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+        //// Đọc giá trị từ Local Storage và cập nhật trạng thái của switch button
+        //$('[data-id]').each(function () {
+        //    var modelId = $(this).data('id');
+        //    var switchValue = localStorage.getItem('switch-' + modelId);
+        //    if (switchValue !== null) {
+        //        $(this).prop('checked', switchValue == 'true');
+        //    }
+        //});
+
+        //// Xử lý sự kiện khi người dùng thay đổi trạng thái của switch button
+        //$('#status-switch').change(function () {
+        //    var isChecked = $(this).is(':checked');
+        //    var modelId = $(this).data('id');
+        //    localStorage.setItem('switch-' + modelId, isChecked);
+
+        //    // Gửi Ajax request để cập nhật trạng thái lên server
+        //    $.ajax({
+        //        url: '@Url.Action("UpdateSwitch", "AdminUsers")',
+        //        type: 'POST',
+        //        data: {
+        //            id: modelId,
+        //            status: isChecked
+        //        },
+        //        success: function (result) {
+        //            console.log(result);
+        //        }
+        //    });
+        //});
+
+
+    </script>
+}

@@ -1,0 +1,80 @@
+﻿
+<!-- Side Nav START -->
+<div class="side-nav">
+    <div class="side-nav-inner">
+        <ul class="side-nav-menu scrollable">
+            <li class="nav-item">
+                <a class="dropdown-toggle" asp-area="" asp-controller="Home" asp-action="TrangChuUser">
+                    <span class="icon-holder">
+                        <i class="anticon anticon-dashboard"></i>
+                    </span>
+                    <span class="title">Trang chủ</span>
+                    <span class="arrow">
+                        <i class="arrow-icon"></i>
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="javascript:void(0);">
+                    <span class="icon-holder">
+                        <i class="anticon anticon-appstore"></i>
+                    </span>
+                    <span class="title">Quản lý file</span>
+                    <span class="arrow">
+                        <i class="arrow-icon"></i>
+                    </span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a asp-area="" asp-controller="FilesReceived" asp-action="Index">Danh sách file hệ thống</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="FilesPersonal" asp-action="Index">Danh sách file cá nhân</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="javascript:void(0);">
+                    <span class="icon-holder">
+                        <i class="anticon anticon-hdd"></i>
+                    </span>
+                    <span class="title">Cấp quyền truy cập file</span>
+                    <span class="arrow">
+                        <i class="arrow-icon"></i>
+                    </span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        
+                        <a asp-area="" asp-controller="Home" asp-action="AuthorShareFile" asp-route-index="1">Toàn bộ người dùng</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="AuthorShareFile" asp-route-index="2">Mỗi phòng ban</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="AuthorShareFile" asp-route-index="3">Mỗi người dùng</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="javascript:void(0);">
+                    <span class="icon-holder">
+                        <i class="anticon anticon-lock"></i>
+                    </span>
+                    <span class="title">Tiện ích</span>
+                    <span class="arrow">
+                        <i class="arrow-icon"></i>
+                    </span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="LogShareFile">Nhật ký chia sẻ file</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="HistoryDeleteFile">Lịch sử xóa file</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+﻿@model hethongquanlyluutrufiles.Models.SharedFile
+@{
+    ViewData["Title"] = "Cấp quyền xem file";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var file = ViewBag.file as File;
+    var usersend = ViewBag.usersend as User;
+}
+<div class="card">
+    <div class="card-body">
+        <div id="invoice" class="p-h-30">
+            <div class="m-t-15 lh-2">
+                <div class="inline-block">
+                    <img class="img-fluid" src="assets/images/logo/logo.png" alt="">
+                    <address class="p-l-10">
+                        <span class="font-weight-semibold text-dark">Công ty kinh doanh và đầu tư</span><br>
+                        <span> 241 - Hoàng Quốc Việt - Bắc Từ Liêm - TP Hà Nội</span><br>
+                        <abbr class="text-dark">Phone:</abbr>
+                        <span>(123) 456-7890</span>
+                    </address>
+                </div>
+                <div class="float-right">
+                    <h2>CONFIRM</h2>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-sm-6">
+                    <h3 class="p-l-10 m-t-10">Người gửi:</h3>
+                    <address class="p-l-10">
+                        <span class="font-weight-semibold text-dark">@usersend.Username</span><br>
+                        <abbr class="text-dark">Chức vụ:</abbr>
+                        <span>@usersend.Role.TypeRole</span><br>
+                        <abbr class="text-dark">Phòng ban:</abbr>
+                        <span>@usersend.Department.DepartmentName</span><br>
+                        <abbr class="text-dark">Phone:</abbr>
+                        <span>@usersend.Phone</span>
+                    </address>
+                </div>
+                <div class="col-sm-6">
+                    <h3 class="p-l-10 m-t-10">Người nhận:</h3>
+                    <address class="p-l-10">
+                        <abbr class="text-dark">Đối tượng:</abbr>
+                        <span>@ViewBag.department</span><br>
+                    </address>
+                </div>
+            </div>
+            <div class="m-t-20">
+                <div class="table-responsive">
+                    <table class="product-info-table m-t-20">
+                        <tbody>
+                            <tr>
+                                <td>ID:</td>
+                                <td>@file.FileId</td>
+                            </tr>
+                            <tr>
+                                <td>Tên file:</td>
+                                <td>@file.FileName</td>
+                            </tr>
+                            <tr>
+                                <td>Loại file:</td>
+                                <td>@file.TypeFile.TypeFileName</td>
+                            </tr>
+                            <tr>
+                                <td>Xác nhận quyền xem file:</td>
+                                <td>
+                                    <form asp-action="PermissGroupUsers">
+                                        <input type="hidden" name="fileid" value="@file.FileId" />
+                                        <div class="form-group">
+                                            <label class="control-label">Message:</label>
+                                            <textarea asp-for="Message" class="form-control" aria-label="With textarea"></textarea>
+                                            <span asp-validation-for="Message" class="text-danger"></span>
+                                        </div>
+                                        <input type="submit" class="btn btn-primary" value="Chia sẻ" />
+                                        <button class="btn btn-primary btn-tone m-r-5" asp-area="" asp-controller="PermissViewFileGroup" asp-action="SelectFile">Trở lại</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

@@ -1,0 +1,67 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<hethongquanlyluutrufiles.Models.SharedFile>
+
+@{
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Danh sách file hệ thống" + CurrentPage;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h2 class="header-title">Danh sách file hệ thống</h2>
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="" asp-controller="Home" asp-action="TrangChuUser" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+        </nav>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="col m-b-30">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr role="row">
+                            <th>ID</th>
+                            <th>Tên file</th>
+                            <th>Người gửi</th>
+                            <th>Thời gian chia sẻ</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr role="row" class="odd">
+                                    <td>@item.FileId</td>
+                                    <td>@item.File.FileName</td>
+                                    <td>@item.File.User.Username</td>
+                                    <td>@item.DateShared </td>
+                                    <td>
+                                       @if ( @item.Notify == false) {
+                                            <a class="btn btn-primary btn-tone m-r-5" style="width: 120px;" asp-area="" asp-controller="FilesReceived" asp-action="Details" asp-route-id="@item.FileId" asp-route-sharefileid="@item.SharedFileId">Đã xem</a>
+                                        } else
+                                        {
+                                            <a class="btn btn-danger btn-tone m-r-5" style="width: 120px;" asp-area="" asp-controller="FilesReceived" asp-action="Details" asp-route-id="@item.FileId" asp-route-sharefileid="@item.SharedFileId">Chưa xem</a>
+                                        }
+                                        <a class="btn btn-primary btn-tone m-r-5" style="width: 120px;" asp-area="" asp-controller="FilesReceived" asp-action="Download" asp-route-id="@item.FileId">Tải xuống</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div aria-label="Page navigation example" style="float: right">
+            <ul class="pagination">
+                <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="Home" asp-action="HistoryFilesDeleted" />
+            </ul>
+        </div>
+    </div>
+</div>

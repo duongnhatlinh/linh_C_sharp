@@ -1,0 +1,19 @@
+﻿@model List<File>
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <tr>
+            <th scope="row">@item.FileId</th>
+            <td>@item.FileName</td>
+            <td>@item.TypeFile.TypeFileName</td>
+            <td>@item.DateUploaded</td>
+            <td>
+                <a class="btn btn-primary btn-tone m-r-5" asp-area="" asp-controller="FilesPersonal" asp-action="Edit" asp-route-id="@item.FileId">Edit</a>
+                <a class="btn btn-secondary btn-tone m-r-5" asp-area="" asp-controller="FilesPersonal" asp-action="Details" asp-route-id="@item.FileId">Details</a>
+                <a class="btn btn-success btn-tone m-r-5" asp-area="" asp-controller="FilesPersonal" asp-action="Delete" asp-route-id="@item.FileId">Delete</a>
+            </td>
+        </tr>
+    }
+}                    }

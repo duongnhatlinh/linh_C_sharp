@@ -1,0 +1,41 @@
+﻿@model hethongquanlyluutrufiles.Models.File
+
+@{
+    ViewData["Title"] = "Tạo file";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-header">
+    <h2 class="header-title">Tạo file</h2>
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="" asp-controller="Home" asp-action="TrangChuUser" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+            <a asp-area="" asp-controller="FilesPersonal" asp-action="Index" class="breadcrumb-item">Danh sách file</a>
+        </nav>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-area="" asp-controller="FilesPersonal" asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="file" name="myfile" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Tên file:</label>
+                <input asp-for="FileName" class="form-control" />
+                <span asp-validation-for="FileName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Loại file:</label>
+                <select asp-for="TypeFileId" class="form-control" asp-items="ViewBag.typefile">
+                    <option selected>Chọn loại file</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Tạo" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

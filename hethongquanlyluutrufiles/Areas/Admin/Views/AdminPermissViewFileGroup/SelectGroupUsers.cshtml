@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Lựa chọn phòng ban";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Lựa chọn phòng ban</h2>
+<hr />
+
+<form asp-action="SelectGroupUsers">
+    <div style="padding-left: 400px">
+        <div class="form-group">
+            <button style="padding: 12px 20px; border: none;width: 250px; border-radius: 5px;" class=" btn btn-primary btn-tone m-r-5" asp-route-check="1">Phòng Nhân sự</button>
+        </div>
+        <div class="form-group">
+            <button style="padding: 12px 20px; border: none;width: 250px; border-radius: 5px;" class=" btn btn-primary btn-tone m-r-5" asp-route-check="2">Phòng kế toán</button>
+        </div>
+        <div class="form-group">
+            <button style="padding: 12px 20px; border: none;width: 250px; border-radius: 5px;" class=" btn btn-primary btn-tone m-r-5" asp-route-check="3">Phòng kinh doanh</button>
+        </div >
+        <div class="form-group">
+            <button style="padding: 12px 20px; border: none;width: 250px; border-radius: 5px;" class=" btn btn-primary btn-tone m-r-5" asp-route-check="4">Phòng kỹ thuật</button>
+        </div>
+        <div class="form-group">
+            <button style="padding: 12px 20px; border: none;width: 250px; border-radius: 5px;" class=" btn btn-primary btn-tone m-r-5" asp-route-check="5">Phòng sản xuất</button>
+        </div>
+    </div>
+</form>

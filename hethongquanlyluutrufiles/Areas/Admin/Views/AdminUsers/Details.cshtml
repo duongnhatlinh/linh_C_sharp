@@ -1,0 +1,90 @@
+﻿@model hethongquanlyluutrufiles.Models.User
+
+@{
+    ViewData["Title"] = "Thông tin người dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="page-header">
+    <h2 class="header-title">Thông tin người dùng</h2>
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="TrangChuAdmin" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+            <a asp-area="Admin" asp-controller="AdminUsers" asp-action="Index" class="breadcrumb-item">Danh sách người dùng</a>
+        </nav>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Thông tin cá nhân</h4>
+        <div class="table-responsive">
+            <table class="product-info-table m-t-20">
+                <tbody>
+                    <tr>
+                        <td>ID:</td>
+                        <td class="text-dark font-weight-semibold">@Model.UserId</td>
+                    </tr>
+                    <tr>
+                        <td>Tên người dùng:</td>
+                        <td>@Model.Username</td>
+                    </tr>
+                    <tr>
+                        <td>Giới tính:</td>
+                        <td>@Model.Sex</td>
+                    </tr>
+                    <tr>
+                        <td>Ngày sinh:</td>
+                        <td>@Model.Birthday</td>
+                    </tr>
+                    <tr>
+                        <td>Số CMND:</td>
+                        <td>@Model.Cmnd</td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td>@Model.Email</td>
+                    </tr>
+                    <tr>
+                        <td>Địa chỉ:</td>
+                        <td>@Model.Address</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Thông tin công việc</h4>
+        <div class="table-responsive">
+            <table class="product-info-table m-t-20">
+                <tbody>
+                    <tr>
+                        <td>Chức danh:</td>
+                        <td class="text-dark font-weight-semibold">@Model.Role.TypeRole</td>
+                    </tr>
+                    <tr>
+                        <td>Bộ phận:</td>
+                        <td>@Model.Department.DepartmentName</td>
+                    </tr>
+                    <tr>
+                        <td>Loại hình công việc:</td>
+                        <td>@Model.Typework</td>
+                    </tr>
+                    <tr>
+                        <td>Công ty:</td>
+                        <td>@Model.Company</td>
+                    </tr>
+                    <tr>
+                        <td>Nơi làm việc:</td>
+                        <td>@Model.Workplace</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div>
+    <a class="btn btn-primary btn-tone m-r-5" asp-area="Admin" asp-controller="AdminUsers" asp-action="Index">Trở lại</a>
+</div>
+

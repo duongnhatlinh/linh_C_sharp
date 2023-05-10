@@ -1,0 +1,46 @@
+﻿@model hethongquanlyluutrufiles.Models.File
+@{
+    ViewData["Title"] = "Chỉnh sửa file";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h2 class="header-title">Chỉnh sửa file</h2>
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="" asp-controller="Home" asp-action="TrangChuUser" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+            <a asp-area="" asp-controller="FilesPersonal" asp-action="Index" class="breadcrumb-item">Danh sách file</a>
+        </nav>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-area="" asp-controller="FilesPersonal" asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FileId" />
+            <input type="hidden" asp-for="UserId" />
+            <input type="hidden" asp-for="FilePath" />
+            <input type="hidden" asp-for="FileSize" />
+            <input type="hidden" asp-for="DateUploaded" />
+            <input type="hidden" asp-for="IsActive" />
+            <div class="form-group">
+                <label class="control-label">Tên file: </label>
+                <input asp-for="FileName" class="form-control" />
+                <span asp-validation-for="FileName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Loại file: </label>
+                <select asp-for="TypeFileId" class="form-control" asp-items="ViewBag.typefile"></select>
+                <span asp-validation-for="TypeFileId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+                <a class="btn btn-primary" asp-area="" asp-controller="FilesPersonal" asp-action="Index">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
